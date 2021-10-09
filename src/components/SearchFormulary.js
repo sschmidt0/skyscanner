@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { ContainerDiv } from './SearchFormulary.styles';
 import { TextInput } from './moduls/TextInput';
 import { DateInput } from './moduls/DateInput';
@@ -6,6 +6,7 @@ import Icon from '@mdi/react';
 import { mdiSwapHorizontalBold } from '@mdi/js';
 import { Button } from './moduls/Button';
 import { RadioInput } from './moduls/RadioInput';
+import { getPlaceList } from '../assets/getPlaceList';
 
 export const SearchFormulary = () => {
   const today = Date.now();
@@ -18,6 +19,10 @@ export const SearchFormulary = () => {
   const [destination, setDestination] = useState('');
   const [departureDay, setDepartureDay] = useState(now);
   const [returnDay, setReturnDay] = useState(tomorrow);
+  const [origenPlaceList, setOrigenPlaceList] = useState([]);
+  const [destinationPlaceList, setDestinationPlaceList] = useState([]);
+  const [isOrigenInputFocused, setIsOrigenInputFocused] = useState(true);
+  const [isDestinationInputFocused, setIsDestinationInputFocused] = useState(false);
 
   const handleDirectionChange = () => {
     setOrigen(destination);
@@ -29,18 +34,23 @@ export const SearchFormulary = () => {
   };
 
   const handleSearch = () => {
-
-    console.log('clicked');
-
-    // const data = {
-    //   travelOption,
-    //   origen,
-    //   destination,
-    //   departureDay,
-    //   returnDay
-    // };
-    // console.log(data);
+    const data = {
+      travelOption,
+      origen,
+      destination,
+      departureDay,
+      returnDay: travelOption === 'return' ? returnDay : '',
+    };
+    console.log(data);
   };
+
+  useEffect(() => {
+    getPlaceList(origen, setOrigenPlaceList);
+  }, [origen]);
+
+  useEffect(() => {
+    getPlaceList(destination, setDestinationPlaceList);
+  }, [destination]);
 
   return (
     <ContainerDiv>
@@ -64,7 +74,10 @@ export const SearchFormulary = () => {
             <TextInput
               label="From"
               value={ origen }
-              setValue={ setOrigen }
+              setValue={ (e) => setOrigen(e.target.value) }
+              placeList={ origenPlaceList }
+              isFocused={ isOrigenInputFocused }
+              setIsFocused={ setIsOrigenInputFocused }
             />
             <Icon path={ mdiSwapHorizontalBold }
               horizontal
@@ -74,7 +87,10 @@ export const SearchFormulary = () => {
             <TextInput
               label="To"
               value={ destination }
-              setValue={ setDestination }
+              setValue={ (e) => setDestination(e.target.value) }
+              placeList={ destinationPlaceList }
+              isFocused={ isDestinationInputFocused }
+              setIsFocused={ setIsDestinationInputFocused }
             />
           </div>
 

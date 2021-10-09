@@ -1,6 +1,8 @@
 import styled from 'styled-components';
 
 export const StyledTextInput = styled.div`
+  position: relative;
+
   label {
     display: block;
   }
