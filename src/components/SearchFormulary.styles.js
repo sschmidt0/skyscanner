@@ -21,22 +21,24 @@ export const ContainerDiv = styled.div`
 
     .second-row-airports {
       display: grid;
-      grid-template-rows: 1fr 26px 1fr;
+      grid-template-rows: 1fr 10px 1fr;
       grid-template-columns: 1fr;
+      row-gap: 5px;
 
       @media screen and (min-width: 517px) {
         grid-template-rows: 1fr;
-        grid-template-columns: 1fr 26px 1fr;
+        grid-template-columns: 1fr 20px 1fr;
+        column-gap: 10px;
       }
 
       @media screen and (min-width: 920px) {
-        display: flex;
+        margin-right: 10px;
       }
     }
 
     .direction-change-icon {
       justify-self: center;
-      margin-top: 10px;
+      margin-top: 7px;
       width: 20px;
       height: 20px;
 
@@ -45,7 +47,7 @@ export const ContainerDiv = styled.div`
       }
 
       @media screen and (min-width: 517px) {
-        align-self: flex-end;
+        place-self: flex-end stretch;
         margin-right: 10px;
         margin-bottom: 10px;
       }
@@ -54,9 +56,11 @@ export const ContainerDiv = styled.div`
     .second-row-dates {
       display: grid;
       grid-template-areas:
-        "inputA inputB"
-        "button button";
-      padding: 20px 0;
+        "inputA"
+        "inputB"
+        "button";
+      row-gap: 30px;
+      padding-top: 20px;
 
       div:first-child {
         grid-area: inputA;
@@ -70,14 +74,20 @@ export const ContainerDiv = styled.div`
         grid-area: button;
       }
 
-      @media screen and (min-width: 517px) {
+      @media screen and (min-width: 444px) {
+        grid-template-areas:
+          "inputA inputB"
+          "button button";
+        column-gap: 10px;
+      }
+
+      @media screen and (min-width: 544px) {
         grid-template-areas:
           "inputA inputB button";
       }
 
       @media screen and (min-width: 920px) {
-        display: flex;
-        padding: 0;
+        padding-top: 0;
       }
     }
   }

@@ -2,11 +2,11 @@ import styled from 'styled-components';
 
 export const StyledPlaceList = styled.ul`
   position: absolute;
-  top: 90px;
+  top: 67px;
   left: 0;
-  width: 88%;
+  width: calc(100% - 40px);
   max-height: 270px;
-  margin: 0;
+  margin: 0 20px 0 0;
   padding: 0 20px;
   color: #000;
   background-color: #fff;
@@ -15,11 +15,16 @@ export const StyledPlaceList = styled.ul`
   overflow-y: scroll;
   z-index: 3;
 
+  @media screen and (min-width: 920px) {
+    width: 250px;
+  }
+
   li {
     display: flex;
     align-items: center;
     padding: 10px 0;
-    font-size: 13px;
+    height: auto;
+    font-size: 12px;
     border-bottom: 1px solid silver;
 
     &:last-child {
@@ -34,6 +39,7 @@ export const StyledPlaceList = styled.ul`
       display: flex;
       flex-direction: column;
       align-items: flex-start;
+      width: 100%;
 
       span:last-child {
         font-size: 12px;
@@ -48,5 +54,4 @@ export const StyledPlaceList = styled.ul`
       color: silver;
     }
   }
-
 `;

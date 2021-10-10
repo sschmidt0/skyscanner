@@ -9,7 +9,6 @@ export const PlaceListBox = ({ list, setValue }) => (
         return (
           <li
             key={ element.PlaceId }
-            onClick={ console.log('clicked') }
           >
             <Icon path={ mdiAirplane }
               horizontal

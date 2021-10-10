@@ -6,7 +6,7 @@ export const StyledButton = styled.button`
   align-items: center;
   justify-content: center;
   height: 42px;
-  margin: 20px 10px -1px 0;
+  ${'' /* margin: 20px 10px -1px 0; */}
   font-weight: 700;
   font-size: 15px;
   color: #fff;
