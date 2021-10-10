@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import { StyledButton } from './Button.styles';
 import Icon from '@mdi/react';
 import { mdiArrowRight } from '@mdi/js';
@@ -16,3 +17,9 @@ export const Button = ({ text, handleSearch, icon }) => (
     }
   </StyledButton>
 );
+
+Button.propTypes = {
+  text: PropTypes.string,
+  handleSearch: PropTypes.func,
+  icon: PropTypes.bool
+};

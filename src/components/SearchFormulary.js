@@ -1,4 +1,6 @@
 import { useState, useEffect } from 'react';
+import { validateInput } from '../assets/validateInput';
+
 import { ContainerDiv } from './SearchFormulary.styles';
 import { TextInput } from './moduls/TextInput';
 import { DateInput } from './moduls/DateInput';
@@ -7,6 +9,7 @@ import { mdiSwapHorizontalBold } from '@mdi/js';
 import { Button } from './moduls/Button';
 import { RadioInput } from './moduls/RadioInput';
 import { getPlaceList } from '../assets/getPlaceList';
+import { sendFormData } from '../assets/sendFormData';
 
 export const SearchFormulary = () => {
   const today = Date.now();
@@ -23,6 +26,7 @@ export const SearchFormulary = () => {
   const [destinationPlaceList, setDestinationPlaceList] = useState([]);
   const [isOrigenInputFocused, setIsOrigenInputFocused] = useState(true);
   const [isDestinationInputFocused, setIsDestinationInputFocused] = useState(false);
+  const [errors, setErrors] = useState({});
 
   const handleDirectionChange = () => {
     setOrigen(destination);
@@ -41,7 +45,24 @@ export const SearchFormulary = () => {
       departureDay,
       returnDay: travelOption === 'return' ? returnDay : '',
     };
-    console.log(data);
+
+    const sendingData = {
+      country: "Spain",
+      currency: "EUR",
+      locale: "es-ES",
+      locationSchema: "iata",
+      originplace: origen,
+      destinationplace: destination,
+      outbounddate: departureDay,
+      inbounddate: travelOption === 'return' ? returnDay : ''
+    };
+
+    const errorChecking = validateInput(data, today);
+    if (!errorChecking.isValid) setErrors(errorChecking.errors);
+    if (errorChecking.isValid) {
+      setErrors({});
+      sendFormData(sendingData);
+    }
   };
 
   useEffect(() => {
@@ -74,10 +95,12 @@ export const SearchFormulary = () => {
             <TextInput
               label="From"
               value={ origen }
-              setValue={ (e) => setOrigen(e.target.value) }
+              setInputValue={ setOrigen }
+              setValue={ setOrigen }
               placeList={ origenPlaceList }
               isFocused={ isOrigenInputFocused }
               setIsFocused={ setIsOrigenInputFocused }
+              error={ errors.origen }
             />
             <Icon path={ mdiSwapHorizontalBold }
               horizontal
@@ -87,10 +110,12 @@ export const SearchFormulary = () => {
             <TextInput
               label="To"
               value={ destination }
-              setValue={ (e) => setDestination(e.target.value) }
+              setInputValue={ setDestination }
+              setValue={ setDestination }
               placeList={ destinationPlaceList }
               isFocused={ isDestinationInputFocused }
               setIsFocused={ setIsDestinationInputFocused }
+              error={ errors.destination }
             />
           </div>
 
@@ -100,12 +125,14 @@ export const SearchFormulary = () => {
               value={ departureDay }
               setValue={ setDepartureDay }
               travelOption={ travelOption }
+              error={ errors.departureDay }
             />
             <DateInput
               label="Return"
               value={ returnDay }
               setValue={ setReturnDay }
               travelOption={ travelOption }
+              error={ errors.returnDay }
             />
             <Button
               text="Search flights"
@@ -116,5 +143,5 @@ export const SearchFormulary = () => {
         </div>
       </form>
     </ContainerDiv>
-  )
+  );
 };

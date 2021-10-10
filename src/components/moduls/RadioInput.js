@@ -1,3 +1,5 @@
+import PropTypes from 'prop-types';
+
 export const RadioInput = ({ label, travelOption, setTravelOption }) => {
   const text = label;
   const firstLetter = text.slice(0,1).toUpperCase();
@@ -17,4 +19,10 @@ export const RadioInput = ({ label, travelOption, setTravelOption }) => {
       <label htmlFor={ label }>{ labelText }</label>
     </>
   );
+};
+
+RadioInput.propTypes = {
+  label: PropTypes.string,
+  travelOption: PropTypes.string,
+  setTravelOption: PropTypes.func
 };
