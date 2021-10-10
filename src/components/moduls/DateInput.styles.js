@@ -1,8 +1,14 @@
 import styled from 'styled-components';
 
 export const StyledDateInput = styled.div`
+  position: relative;
+
   label {
     display: block;
+  }
+
+  div {
+    display: flex;
   }
 
   input {
@@ -13,5 +19,12 @@ export const StyledDateInput = styled.div`
     border-radius: 3px;
     border: none;
     outline: none;
+  }
+
+  .error-span {
+    position: absolute;
+    bottom: -20px;
+    padding-top: 3px;
+    color: red;
   }
 `;

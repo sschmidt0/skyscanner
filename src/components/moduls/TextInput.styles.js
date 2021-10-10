@@ -30,4 +30,10 @@ export const StyledTextInput = styled.div`
       outline: none;
     }
   }
+
+  .error-span {
+    position: absolute;
+    padding-top: 3px;
+    color: red;
+  }
 `;

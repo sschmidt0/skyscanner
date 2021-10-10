@@ -60,7 +60,7 @@ export const ContainerDiv = styled.div`
         "inputB"
         "button";
       row-gap: 30px;
-      padding-top: 20px;
+      padding-top: 30px;
 
       div:first-child {
         grid-area: inputA;
