@@ -6,17 +6,12 @@ export const StyledDateInput = styled.div`
   }
 
   input {
-    width: 85%;
+    width: calc(100% - 20px);
     height: 20px;
     margin-top: 8px;
-    margin-right: 10px;
     padding: 10px;
     border-radius: 3px;
     border: none;
     outline: none;
-
-    @media screen and (min-width: 920px) {
-      width: 110px;
-    }
   }
 `;

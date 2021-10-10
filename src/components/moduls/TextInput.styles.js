@@ -1,6 +1,8 @@
 import styled from 'styled-components';
 
 export const StyledTextInput = styled.div`
+  position: relative;
+
   label {
     display: block;
   }
@@ -9,7 +11,6 @@ export const StyledTextInput = styled.div`
     display: flex;
     align-items: center;
     height: 40px;
-    margin-right: 10px;
     margin-top: 8px;
     padding-left: 3px;
     background-color: #fff;

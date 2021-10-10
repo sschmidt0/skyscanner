@@ -1,8 +1,9 @@
 import { StyledTextInput } from './TextInput.styles';
 import Icon from '@mdi/react';
 import { mdiAirplane } from '@mdi/js';
+import { PlaceListBox } from './PlaceListBox';
 
-export const TextInput = ({ label, value, setValue }) => (
+export const TextInput = ({ label, value, setValue, placeList, isFocused, setIsFocused }) => (
   <StyledTextInput>
     <label htmlFor={ label }>{ label }</label>
     <div>
@@ -13,10 +14,13 @@ export const TextInput = ({ label, value, setValue }) => (
       />
       <input
         type="text"
-        name={ value }
+        name={ label }
         value={ value }
-        onChange={ (e) => setValue(e.target.value) }
+        onChange={ (e) => setValue(e) }
+        onFocus={ () => setIsFocused(true) }
+        onBlur={ () => setIsFocused(false) }
       />
     </div>
+    { placeList !== 'undefined' && isFocused && <PlaceListBox list={ placeList } setValue={ setValue } /> }
   </StyledTextInput>
 );
