@@ -1,17 +1,21 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
+import { useHistory } from 'react-router-dom';
+import { SearchContext } from './SearchContext';
 import { validateInput } from '../assets/validateInput';
 
 import { ContainerDiv } from './SearchFormulary.styles';
-import { TextInput } from './moduls/TextInput';
-import { DateInput } from './moduls/DateInput';
+import { TextInput } from './moduls/inputs/TextInput';
+import { DateInput } from './moduls/inputs/DateInput';
 import Icon from '@mdi/react';
 import { mdiSwapHorizontalBold } from '@mdi/js';
 import { Button } from './moduls/Button';
-import { RadioInput } from './moduls/RadioInput';
+import { RadioInput } from './moduls/inputs/RadioInput';
 import { getPlaceList } from '../assets/getPlaceList';
 import { sendFormData } from '../assets/sendFormData';
 
 export const SearchFormulary = () => {
+  const history = useHistory();
+  //const { searchData } = useContext(SearchContext);
   const today = Date.now();
   const now = new Date(today).toISOString().slice(0,10);
   const addDay = today + 60 * 60 * 24 * 1000;
@@ -27,6 +31,8 @@ export const SearchFormulary = () => {
   const [isOrigenInputFocused, setIsOrigenInputFocused] = useState(true);
   const [isDestinationInputFocused, setIsDestinationInputFocused] = useState(false);
   const [errors, setErrors] = useState({});
+
+  //console.log('searchData', searchData);
 
   const handleDirectionChange = () => {
     setOrigen(destination);
@@ -62,6 +68,7 @@ export const SearchFormulary = () => {
     if (errorChecking.isValid) {
       setErrors({});
       sendFormData(sendingData);
+      history.push('/search-results');
     }
   };
 

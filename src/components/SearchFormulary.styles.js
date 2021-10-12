@@ -1,10 +1,17 @@
 import styled from 'styled-components';
 
 export const ContainerDiv = styled.div`
+  width: 100%;
   padding: 30px;
   border-radius: 5px;
   background-color: #031326;
   color: #fff;
+  box-sizing: border-box;
+
+  @media screen and (min-width: 768px) {
+    max-width: 880px;
+    margin: auto;
+  }
 
   label {
     margin-right: 10px;
@@ -72,6 +79,7 @@ export const ContainerDiv = styled.div`
 
       button {
         grid-area: button;
+        align-self: flex-end;
       }
 
       @media screen and (min-width: 444px) {

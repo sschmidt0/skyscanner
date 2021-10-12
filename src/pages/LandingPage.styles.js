@@ -19,6 +19,7 @@ export const ContainerDiv = styled.div`
 
     @media screen and (min-width: 768px) {
       max-width: 880px;
+      margin: auto;
       margin: -300px auto 0;
     }
 
@@ -27,6 +28,7 @@ export const ContainerDiv = styled.div`
       color: #fff;
 
       @media screen and (min-width: 768px) {
+        margin-bottom: 20px;
         font-size: 34px;
       }
     }
