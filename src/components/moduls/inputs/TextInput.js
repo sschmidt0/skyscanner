@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { PlaceListBox } from './PlaceListBox';
+import { PlaceListBox } from '../../PlaceListBox';
 import { StyledTextInput } from './TextInput.styles';
 import Icon from '@mdi/react';
 import { mdiAirplane } from '@mdi/js';

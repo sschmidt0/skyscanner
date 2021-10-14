@@ -1,12 +1,10 @@
 import styled from 'styled-components';
 
 export const StyledButton = styled.button`
-  align-self: flex-end;
   display: flex;
   align-items: center;
   justify-content: center;
   height: 42px;
-  ${'' /* margin: 20px 10px -1px 0; */}
   font-weight: 700;
   font-size: 15px;
   color: #fff;

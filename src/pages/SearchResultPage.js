@@ -1,5 +1,14 @@
+import { SearchFormulary } from "../components/SearchFormulary";
+import { ResultBox } from "../components/ResultBox";
+import { SearchContainerDiv } from "./SearchResultPage.styles";
+
 export const SearchResultPage = () => {
   return (
-    <h1>Search Result Page</h1>
+    <SearchContainerDiv>
+      <section>
+        <SearchFormulary />
+        <ResultBox />
+      </section>
+    </SearchContainerDiv>
   )
 };

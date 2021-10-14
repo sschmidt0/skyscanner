@@ -3,6 +3,7 @@ const isEmpty = require('is-empty');
 
 export const validateInput = (data) => {
   let errors = {};
+  const regex = /\(\w+\)/;
 
   // Convert empty fields to an empty string so we can use validator functions
   data.origen = !isEmpty(data.origen) ? data.origen : "";
@@ -14,11 +15,17 @@ export const validateInput = (data) => {
   if (Validator.isEmpty(data.origen)) {
     errors.origen = "Choose origen";
   }
+  if (!data.origen.match(regex)) {
+    errors.origen = "Invalid origen";
+  }
   // destination check
   if (Validator.isEmpty(data.destination)) {
     errors.destination = "Choose destination";
   }
   if (data.origen === data.destination) {
+    errors.destination = "Invalid destination";
+  }
+  if (!data.destination.match(regex)) {
     errors.destination = "Invalid destination";
   }
   // departure day check

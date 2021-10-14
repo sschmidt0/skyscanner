@@ -1,30 +1,43 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
+import { useHistory } from 'react-router-dom';
+import { SearchContext } from './SearchContext';
 import { validateInput } from '../assets/validateInput';
+import { getAirportLetters } from '../assets/getAirportLetters';
 
 import { ContainerDiv } from './SearchFormulary.styles';
-import { TextInput } from './moduls/TextInput';
-import { DateInput } from './moduls/DateInput';
+import { TextInput } from './moduls/inputs/TextInput';
+import { DateInput } from './moduls/inputs/DateInput';
 import Icon from '@mdi/react';
 import { mdiSwapHorizontalBold } from '@mdi/js';
 import { Button } from './moduls/Button';
-import { RadioInput } from './moduls/RadioInput';
+import { RadioInput } from './moduls/inputs/RadioInput';
 import { getPlaceList } from '../assets/getPlaceList';
-import { sendFormData } from '../assets/sendFormData';
+import { createSession } from '../assets/createSession';
 
 export const SearchFormulary = () => {
+  const history = useHistory();
+  const [searchData, setSearchData] = useContext(SearchContext);
+  const [sessionURL, setSessionURL] = useContext(SearchContext);
   const today = Date.now();
   const now = new Date(today).toISOString().slice(0,10);
   const addDay = today + 60 * 60 * 24 * 1000;
   const tomorrow = new Date(addDay).toISOString().slice(0,10);
-
+  const initialDepartureDay =
+    (searchData.departureDay !== undefined && searchData.departureDay !== '')
+    ? searchData.departureDay
+    : now;
+  const initialReturnDay =
+    (searchData.returnDay !== undefined && searchData.returnDay !== '')
+    ? searchData.returnDay
+    : tomorrow;
   const [travelOption, setTravelOption] = useState('return');
-  const [origen, setOrigen] = useState('');
-  const [destination, setDestination] = useState('');
-  const [departureDay, setDepartureDay] = useState(now);
-  const [returnDay, setReturnDay] = useState(tomorrow);
+  const [origen, setOrigen] = useState(searchData.origen !== '' ? searchData.origen : '');
+  const [destination, setDestination] = useState(searchData.destination !== '' ? searchData.destination : '');
+  const [departureDay, setDepartureDay] = useState(initialDepartureDay);
+  const [returnDay, setReturnDay] = useState(initialReturnDay);
   const [origenPlaceList, setOrigenPlaceList] = useState([]);
   const [destinationPlaceList, setDestinationPlaceList] = useState([]);
-  const [isOrigenInputFocused, setIsOrigenInputFocused] = useState(true);
+  const [isOrigenInputFocused, setIsOrigenInputFocused] = useState(false);
   const [isDestinationInputFocused, setIsDestinationInputFocused] = useState(false);
   const [errors, setErrors] = useState({});
 
@@ -47,12 +60,12 @@ export const SearchFormulary = () => {
     };
 
     const sendingData = {
-      country: "Spain",
+      country: "ES",
       currency: "EUR",
-      locale: "es-ES",
+      locale: "en-GB",
       locationSchema: "iata",
-      originplace: origen,
-      destinationplace: destination,
+      originplace: getAirportLetters(origen),
+      destinationplace: getAirportLetters(destination),
       outbounddate: departureDay,
       inbounddate: travelOption === 'return' ? returnDay : ''
     };
@@ -61,7 +74,10 @@ export const SearchFormulary = () => {
     if (!errorChecking.isValid) setErrors(errorChecking.errors);
     if (errorChecking.isValid) {
       setErrors({});
-      sendFormData(sendingData);
+      setSearchData(data);
+      console.log(sessionURL);
+      createSession(sendingData, setSessionURL);
+      history.push('/search-results');
     }
   };
 
