@@ -5,18 +5,20 @@ SearchContext.displayName = 'SearchContext';
 
 export const SearchProvider = (props) => {
   const [searchData, setSearchData] = useState({
-    sessionURL: '',
     origen: '',
     destination: '',
     departureDate: '',
     returnDate: ''
   });
+  const [sessionURL, setSessionURL] = useState('');
 
   return (
-    <SearchContext.Provider value={{
+    <SearchContext.Provider value={[
       searchData,
-      setSearchData
-    }}>
+      setSearchData,
+      sessionURL,
+      setSessionURL
+    ]}>
       { props.children }
     </SearchContext.Provider>
   )

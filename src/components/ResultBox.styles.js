@@ -10,4 +10,12 @@ export const ResultBoxContainer = styled.div`
     width: 700px;
     margin: auto;
   }
+
+  button {
+    width: 100%;
+
+    @media screen and (min-width: 700px) {
+      width: 140px;
+    }
+  }
 `;
