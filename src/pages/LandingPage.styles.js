@@ -32,5 +32,9 @@ export const ContainerDiv = styled.div`
         font-size: 34px;
       }
     }
+
+    div {
+      border-radius: 5px;
+    }
   }
 `;

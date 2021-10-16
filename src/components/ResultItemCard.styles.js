@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const StyledCard = styled.div`
+export const StyledCard = styled.li`
   display: grid;
   grid-template-rows: 50px 1fr 1fr;
   grid-template-columns: 1fr;
@@ -8,7 +8,6 @@ export const StyledCard = styled.div`
     "companies"
     "info"
     "price";
-  max-width: 700px;
   margin: 20px 0;
   padding: 20px;
   background-color: #fff;

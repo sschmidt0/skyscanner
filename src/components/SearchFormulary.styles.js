@@ -3,7 +3,6 @@ import styled from 'styled-components';
 export const ContainerDiv = styled.div`
   width: 100%;
   padding: 30px;
-  border-radius: 5px;
   background-color: #031326;
   color: #fff;
   box-sizing: border-box;
@@ -98,5 +97,27 @@ export const ContainerDiv = styled.div`
         padding-top: 0;
       }
     }
+
+  }
+`;
+
+export const StyledCityDiv = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 20px 0;
+  color: #fff;
+  background-color: #005DC8;
+  box-sizing: border-box;
+
+  @media screen and (min-width: 768px) {
+    max-width: 880px;
+    margin: auto;
+    border-radius: 0 0 5px 5px;
+  }
+
+  span {
+    font-size: 30px;
   }
 `;

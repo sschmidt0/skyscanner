@@ -41,8 +41,11 @@ export const StyledInfoItemDiv = styled.div`
       position: relative;
       border-top: 1px solid silver;
 
-      span:first-child {
-        ${'' /* color: #139C8E; */}
+      .span-green-text {
+        color: #139C8E;
+      }
+
+      .span-red-text {
         color: red;
       }
 
