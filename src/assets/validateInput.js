@@ -15,7 +15,7 @@ export const validateInput = (data) => {
   if (Validator.isEmpty(data.origen)) {
     errors.origen = "Choose origen";
   }
-  if (!data.origen.match(regex)) {
+  if (data.origen.match(regex) === null) {
     errors.origen = "Invalid origen";
   }
   // destination check
@@ -25,7 +25,7 @@ export const validateInput = (data) => {
   if (data.origen === data.destination) {
     errors.destination = "Invalid destination";
   }
-  if (!data.destination.match(regex)) {
+  if (data.destination.match(regex) === null) {
     errors.destination = "Invalid destination";
   }
   // departure day check

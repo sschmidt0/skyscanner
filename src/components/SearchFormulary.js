@@ -4,7 +4,7 @@ import { SearchContext } from './SearchContext';
 import { validateInput } from '../assets/validateInput';
 import { getAirportLetters } from '../assets/getAirportLetters';
 
-import { ContainerDiv } from './SearchFormulary.styles';
+import { ContainerDiv, StyledCityDiv } from './SearchFormulary.styles';
 import { TextInput } from './moduls/inputs/TextInput';
 import { DateInput } from './moduls/inputs/DateInput';
 import Icon from '@mdi/react';
@@ -14,27 +14,16 @@ import { RadioInput } from './moduls/inputs/RadioInput';
 import { getPlaceList } from '../assets/getPlaceList';
 import { createSession } from '../assets/createSession';
 
-export const SearchFormulary = () => {
+export const SearchFormulary = ({ isDetailPage }) => {
   const history = useHistory();
   const [searchData, setSearchData] = useContext(SearchContext);
   const [sessionURL, setSessionURL] = useContext(SearchContext);
   const today = Date.now();
-  const now = new Date(today).toISOString().slice(0,10);
-  const addDay = today + 60 * 60 * 24 * 1000;
-  const tomorrow = new Date(addDay).toISOString().slice(0,10);
-  const initialDepartureDay =
-    (searchData.departureDay !== undefined && searchData.departureDay !== '')
-    ? searchData.departureDay
-    : now;
-  const initialReturnDay =
-    (searchData.returnDay !== undefined && searchData.returnDay !== '')
-    ? searchData.returnDay
-    : tomorrow;
   const [travelOption, setTravelOption] = useState('return');
   const [origen, setOrigen] = useState(searchData.origen !== '' ? searchData.origen : '');
   const [destination, setDestination] = useState(searchData.destination !== '' ? searchData.destination : '');
-  const [departureDay, setDepartureDay] = useState(initialDepartureDay);
-  const [returnDay, setReturnDay] = useState(initialReturnDay);
+  const [departureDay, setDepartureDay] = useState('');
+  const [returnDay, setReturnDay] = useState('');
   const [origenPlaceList, setOrigenPlaceList] = useState([]);
   const [destinationPlaceList, setDestinationPlaceList] = useState([]);
   const [isOrigenInputFocused, setIsOrigenInputFocused] = useState(false);
@@ -51,6 +40,8 @@ export const SearchFormulary = () => {
   };
 
   const handleSearch = () => {
+    setSearchData({});
+
     const data = {
       travelOption,
       origen,
@@ -82,6 +73,24 @@ export const SearchFormulary = () => {
   };
 
   useEffect(() => {
+    const now = new Date(today).toISOString().slice(0,10);
+    const addDay = today + 60 * 60 * 24 * 1000;
+    const tomorrow = new Date(addDay).toISOString().slice(0,10);
+    const initialDepartureDay =
+      (searchData.departureDay !== undefined && searchData.departureDay !== '')
+      ? searchData.departureDay
+      : now;
+    const initialReturnDay =
+      (searchData.returnDay !== undefined && searchData.returnDay !== '')
+      ? searchData.returnDay
+      : tomorrow;
+
+    setDepartureDay(initialDepartureDay);
+    setReturnDay(initialReturnDay);
+    //eslint-disable-next-line
+  }, []);
+
+  useEffect(() => {
     getPlaceList(origen, setOrigenPlaceList);
   }, [origen]);
 
@@ -90,74 +99,81 @@ export const SearchFormulary = () => {
   }, [destination]);
 
   return (
-    <ContainerDiv>
-      <form noValidate onSubmit={ handleSubmit }>
+    <>
+      <ContainerDiv>
+        <form noValidate onSubmit={ handleSubmit }>
 
-        <div className="first-row">
-          <RadioInput
-            label="return"
-            travelOption={ travelOption }
-            setTravelOption={ setTravelOption }
-          />
-          <RadioInput
-            label="one-way"
-            travelOption={ travelOption }
-            setTravelOption={ setTravelOption }
-          />
-        </div>
-
-        <div className="second-row">
-          <div className="second-row-airports">
-            <TextInput
-              label="From"
-              value={ origen }
-              setInputValue={ setOrigen }
-              setValue={ setOrigen }
-              placeList={ origenPlaceList }
-              isFocused={ isOrigenInputFocused }
-              setIsFocused={ setIsOrigenInputFocused }
-              error={ errors.origen }
+          <div className="first-row">
+            <RadioInput
+              label="return"
+              travelOption={ travelOption }
+              setTravelOption={ setTravelOption }
             />
-            <Icon path={ mdiSwapHorizontalBold }
-              horizontal
-              onClick={ handleDirectionChange }
-              className="direction-change-icon"
-            />
-            <TextInput
-              label="To"
-              value={ destination }
-              setInputValue={ setDestination }
-              setValue={ setDestination }
-              placeList={ destinationPlaceList }
-              isFocused={ isDestinationInputFocused }
-              setIsFocused={ setIsDestinationInputFocused }
-              error={ errors.destination }
+            <RadioInput
+              label="one-way"
+              travelOption={ travelOption }
+              setTravelOption={ setTravelOption }
             />
           </div>
 
-          <div className="second-row-dates">
-            <DateInput
-              label="Depart"
-              value={ departureDay }
-              setValue={ setDepartureDay }
-              travelOption={ travelOption }
-              error={ errors.departureDay }
-            />
-            <DateInput
-              label="Return"
-              value={ returnDay }
-              setValue={ setReturnDay }
-              travelOption={ travelOption }
-              error={ errors.returnDay }
-            />
-            <Button
-              text="Search flights"
-              handleSearch={ handleSearch }
-              icon
-            />
+          <div className="second-row">
+            <div className="second-row-airports">
+              <TextInput
+                label="From"
+                value={ origen }
+                setInputValue={ setOrigen }
+                setValue={ setOrigen }
+                placeList={ origenPlaceList }
+                isFocused={ isOrigenInputFocused }
+                setIsFocused={ setIsOrigenInputFocused }
+                error={ errors.origen }
+              />
+              <Icon path={ mdiSwapHorizontalBold }
+                horizontal
+                onClick={ handleDirectionChange }
+                className="direction-change-icon"
+              />
+              <TextInput
+                label="To"
+                value={ destination }
+                setInputValue={ setDestination }
+                setValue={ setDestination }
+                placeList={ destinationPlaceList }
+                isFocused={ isDestinationInputFocused }
+                setIsFocused={ setIsDestinationInputFocused }
+                error={ errors.destination }
+              />
+            </div>
+
+            <div className="second-row-dates">
+              <DateInput
+                label="Depart"
+                value={ departureDay }
+                setValue={ setDepartureDay }
+                travelOption={ travelOption }
+                error={ errors.departureDay }
+              />
+              <DateInput
+                label="Return"
+                value={ returnDay }
+                setValue={ setReturnDay }
+                travelOption={ travelOption }
+                error={ errors.returnDay }
+              />
+              <Button
+                text="Search flights"
+                handleSearch={ handleSearch }
+                icon
+              />
+            </div>
           </div>
-        </div>
-      </form>
-    </ContainerDiv>
+        </form>
+      </ContainerDiv>
+      {
+        isDetailPage && <StyledCityDiv className="city-box">
+          <span>{ destination }</span>
+        </StyledCityDiv>
+      }
+    </>
   );
 };
