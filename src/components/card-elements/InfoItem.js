@@ -3,7 +3,7 @@ import { getPlaceName, getStopsNames } from '../../assets/getNames';
 import { StyledInfoItemDiv } from './InfoItem.styles';
 
 export const InfoItem = ({ flightData, names }) => {
-  const isDirect = flightData.Duration.Stops < 1;
+  const isDirect = flightData.Stops.length === 0;
   const [departureTime, setDepartureTime] = useState('');
   const [arrivalTime, setArrivalTime] = useState('');
   const [duration, setDuration] = useState('');
@@ -20,7 +20,7 @@ export const InfoItem = ({ flightData, names }) => {
       : (flightData.Duration % 60 === 0)
       ? `${Math.floor(flightData.Duration / 60)}h 00`
       : `${Math.floor(flightData.Duration / 60)}h ${flightData.Duration % 60}`);
-    setStopsNumber(flightData.Stops.length > 1 ? `${flightData.Stops.length} stops` : '1 stop');
+    flightData.Stops.length >= 1 && setStopsNumber(flightData.Stops.length > 1 ? `${flightData.Stops.length} stops` : '1 stop');
     //eslint-disable-next-line
   }, []);
 
@@ -28,7 +28,7 @@ export const InfoItem = ({ flightData, names }) => {
     if (names !== undefined) {
       setOrigenPlace(getPlaceName(flightData.OriginStation, names)[0].Code);
       setDestinationPlace(getPlaceName(flightData.DestinationStation, names)[0].Code);
-      setStopPlace(getStopsNames(flightData.Stops, names));
+      flightData.Stops.length >= 1 && setStopPlace(getStopsNames(flightData.Stops, names));
     }
     //eslint-disable-next-line
   }, [names]);

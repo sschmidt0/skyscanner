@@ -14,5 +14,5 @@ export const filterLegsPerItinerary = (itinerary, data) => {
 };
 
 const filterLegs = (legId, data) => {
-  return data.filter(element => element.Id === legId);
+  return data.find(element => element.Id === legId);
 };

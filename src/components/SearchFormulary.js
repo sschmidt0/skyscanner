@@ -40,6 +40,8 @@ export const SearchFormulary = ({ isDetailPage }) => {
   };
 
   const handleSearch = () => {
+    setSearchData({});
+
     const data = {
       travelOption,
       origen,
@@ -169,7 +171,7 @@ export const SearchFormulary = ({ isDetailPage }) => {
       </ContainerDiv>
       {
         isDetailPage && <StyledCityDiv className="city-box">
-          <span>{ destination.replace(/ .*/,'') }</span>
+          <span>{ destination }</span>
         </StyledCityDiv>
       }
     </>

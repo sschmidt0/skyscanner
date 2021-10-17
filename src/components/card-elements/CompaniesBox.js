@@ -4,12 +4,14 @@ import { StyledCompaniesDiv } from "./CompaniesBox.styles";
 
 export const CompaniesBox = ({ flightItemOut, flightItemIn, names }) => {
   const [nameList, setNameList] = useState([]);
-  const [copiedList, setCopiedList] = useState([]);
+  const filteredCarriers = [];
 
   useEffect(() => {
     if (names !== undefined) {
-      setNameList(getCarrierNames(flightItemOut, flightItemIn, names));
-      setCopiedList(getCarrierNames(flightItemOut, flightItemIn, names).slice(1));
+      getCarrierNames(flightItemOut, flightItemIn, names).forEach(element => {
+        if (!filteredCarriers.includes(element)) filteredCarriers.push(element);
+      });
+      setNameList(filteredCarriers);
     }
     //eslint-disable-next-line
   }, [names]);
@@ -20,7 +22,7 @@ export const CompaniesBox = ({ flightItemOut, flightItemIn, names }) => {
         nameList.length > 0 && <span>{ nameList[0] }</span>
       }
       {
-        nameList.length > 1 && copiedList.map((element, id) => <span key={ id }>{ `+ ${element}` }</span>)
+        nameList.length > 1 && nameList.slice(1).map((element, id) => <span key={ id }>{ `+ ${element}` }</span>)
       }
     </StyledCompaniesDiv>
   );
