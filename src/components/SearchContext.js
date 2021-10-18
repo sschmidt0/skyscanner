@@ -11,14 +11,24 @@ export const SearchProvider = (props) => {
     returnDate: ''
   });
   const [sessionURL, setSessionURL] = useState('');
+  const [itemData, setItemData] = useState({
+    flightItemOut: '',
+    flightItemIn: '',
+    names: ''
+  });
+  const [segments, setSegments] = useState([]);
 
   return (
-    <SearchContext.Provider value={[
+    <SearchContext.Provider value={{
       searchData,
       setSearchData,
       sessionURL,
-      setSessionURL
-    ]}>
+      setSessionURL,
+      itemData,
+      setItemData,
+      segments,
+      setSegments
+    }}>
       { props.children }
     </SearchContext.Provider>
   )

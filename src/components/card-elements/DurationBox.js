@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import { StyledDurationBox } from './DurationBox.styles';
 
 export const DurationBox = ({ duration }) => (
@@ -7,3 +8,7 @@ export const DurationBox = ({ duration }) => (
     <span></span>
   </StyledDurationBox>
 );
+
+DurationBox.propTypes = {
+  duration: PropTypes.string,
+};

@@ -1,7 +1,10 @@
+import PropTypes from 'prop-types';
 import { InfoItem } from './InfoItem';
 import { StyledInfoDiv } from './TravelInfoBox.styles';
 
-export const TravelInfoBox = ({ flightItemOut, flightItemIn, names }) =>  (
+export const TravelInfoBox = ({ flightItemOut, flightItemIn, names }) => {
+  console.log('typeof', typeof flightItemOut); console.log('typeof', typeof flightItemIn); console.log('typeof', typeof names);
+  return(
   <StyledInfoDiv>
     <InfoItem
       flightData={ flightItemOut }
@@ -12,8 +15,10 @@ export const TravelInfoBox = ({ flightItemOut, flightItemIn, names }) =>  (
       names={ names }
     />
   </StyledInfoDiv>
-);
+);};
 
-
-
-
+TravelInfoBox.propTypes = {
+  flightItemOut: PropTypes.object,
+  flightItemIn: PropTypes.object,
+  names: PropTypes.object,
+};

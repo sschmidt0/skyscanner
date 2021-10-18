@@ -26,16 +26,19 @@ export const StyledDetailBox = styled.div`
       margin-right: 40px;
     }
   }
+`;
 
-  .directFlight, .stopFlight {
-    display: flex;
-    margin-top: 10px;
-    padding: 40px 0 20px;
-    border-top: 2px solid silver;
+export const LowerDivContainer = styled.div`
+  border-top: 2px solid silver;
+
+  .directFlight {
+    margin: 30px 0 20px;
   }
 
-  .stopFlight {
+  .notDirectFlight {
+    display: flex;
     flex-direction: column;
+    margin: 30px 0 20px;
 
     .connection-div {
       margin: 20px 0;

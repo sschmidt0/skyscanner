@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
 import { getCarrierNames } from '../../assets/getNames';
 import { StyledCompaniesDiv } from "./CompaniesBox.styles";
 
@@ -26,4 +27,10 @@ export const CompaniesBox = ({ flightItemOut, flightItemIn, names }) => {
       }
     </StyledCompaniesDiv>
   );
+};
+
+CompaniesBox.propTypes = {
+  flightItemOut: PropTypes.object,
+  flightItemIn: PropTypes.object,
+  names: PropTypes.array
 };

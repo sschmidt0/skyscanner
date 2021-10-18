@@ -21,4 +21,10 @@ export const StyledCard = styled.li`
       "companies info price";
     padding-right: 0;
   }
+
+  .middle-info-box {
+    grid-area: info;
+    display: flex;
+    flex-direction: column;
+  }
 `;

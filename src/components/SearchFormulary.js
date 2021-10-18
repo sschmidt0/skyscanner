@@ -1,4 +1,5 @@
 import { useState, useEffect, useContext } from 'react';
+import PropTypes from 'prop-types';
 import { useHistory } from 'react-router-dom';
 import { SearchContext } from './SearchContext';
 import { validateInput } from '../assets/validateInput';
@@ -16,8 +17,8 @@ import { createSession } from '../assets/createSession';
 
 export const SearchFormulary = ({ isDetailPage }) => {
   const history = useHistory();
-  const [searchData, setSearchData] = useContext(SearchContext);
-  const [sessionURL, setSessionURL] = useContext(SearchContext);
+  const { searchData, setSearchData } = useContext(SearchContext);
+  const { sessionURL, setSessionURL } = useContext(SearchContext);
   const today = Date.now();
   const [travelOption, setTravelOption] = useState('return');
   const [origen, setOrigen] = useState(searchData.origen !== '' ? searchData.origen : '');
@@ -29,6 +30,7 @@ export const SearchFormulary = ({ isDetailPage }) => {
   const [isOrigenInputFocused, setIsOrigenInputFocused] = useState(false);
   const [isDestinationInputFocused, setIsDestinationInputFocused] = useState(false);
   const [errors, setErrors] = useState({});
+  const regex = /\(\w+\)/;
 
   const handleDirectionChange = () => {
     setOrigen(destination);
@@ -40,8 +42,6 @@ export const SearchFormulary = ({ isDetailPage }) => {
   };
 
   const handleSearch = () => {
-    setSearchData({});
-
     const data = {
       travelOption,
       origen,
@@ -171,9 +171,13 @@ export const SearchFormulary = ({ isDetailPage }) => {
       </ContainerDiv>
       {
         isDetailPage && <StyledCityDiv className="city-box">
-          <span>{ destination }</span>
+          <span>{ destination.replace(regex, '') }</span>
         </StyledCityDiv>
       }
     </>
   );
+};
+
+SearchFormulary.propTypes = {
+  isDetailPage: PropTypes.bool,
 };
