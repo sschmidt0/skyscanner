@@ -9,7 +9,7 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import { FilterLine } from './FilterLine';
 
 export const ResultCardsContainer = () => {
-  const [sessionURL] = useContext(SearchContext);
+  const { sessionURL, setSegments } = useContext(SearchContext);
   const [data, setData] = useState({});
   const hasKeys = !!Object.keys(data).length;
   const [isExtended, setIsExtended] = useState(false);
@@ -23,8 +23,6 @@ export const ResultCardsContainer = () => {
     setIsExtended(true);
     setSliceEnd(data.Itineraries.length);
   };
-
-  console.log(data);
 
   useEffect(() => {
     const filters = {
@@ -46,6 +44,8 @@ export const ResultCardsContainer = () => {
       places: data.Places,
       carriers: data.Carriers
     });
+    setSegments(data.Segments);
+    //eslint-disable-next-line
   }, [data]);
 
   return (
@@ -58,6 +58,7 @@ export const ResultCardsContainer = () => {
           setIsOneStopSelected={ setIsOneStopSelected }
           isMultipleStopSelected={ isMultipleStopSelected }
           setIsMultipleStopSelected={ setIsMultipleStopSelected }
+          data={ data }
         />
       }
       {
@@ -67,17 +68,30 @@ export const ResultCardsContainer = () => {
               data.Itineraries.slice(0,sliceEnd).map((itinerary, id) => {
                 const flightInfo = filterLegsPerItinerary(itinerary, data);
 
-                if ((isDirectSelected && flightInfo.outboundFilteredIdLegs.Stops.length === 0 && flightInfo.inboundFilteredIdLegs.Stops.length === 0) ||
-                (isOneStopSelected && ((flightInfo.outboundFilteredIdLegs.Stops.length === 1 && flightInfo.inboundFilteredIdLegs.Stops.length <= 1) || (flightInfo.outboundFilteredIdLegs.Stops.length <= 1 && flightInfo.inboundFilteredIdLegs.Stops.length === 1))) ||
-                (isMultipleStopSelected && (flightInfo.outboundFilteredIdLegs.Stops.length > 1 || flightInfo.inboundFilteredIdLegs.Stops.length > 1))) {
-                  return <ResultItemCard
-                    itinerary={ itinerary }
-                    flightInfo={ flightInfo }
-                    names={ names }
-                    key={ id }
-                  />
-                };
-                return(<></>);
+                if (flightInfo.inboundFilteredIdLegs !== undefined) {
+                  if ((isDirectSelected && flightInfo.outboundFilteredIdLegs.Stops.length === 0 && flightInfo.inboundFilteredIdLegs.Stops.length === 0) ||
+                  (isOneStopSelected && ((flightInfo.outboundFilteredIdLegs.Stops.length === 1 && flightInfo.inboundFilteredIdLegs.Stops.length <= 1) || (flightInfo.outboundFilteredIdLegs.Stops.length <= 1 && flightInfo.inboundFilteredIdLegs.Stops.length === 1))) ||
+                  (isMultipleStopSelected && (flightInfo.outboundFilteredIdLegs.Stops.length > 1 || flightInfo.inboundFilteredIdLegs.Stops.length > 1))) {
+                    return <ResultItemCard
+                      itinerary={ itinerary }
+                      flightInfo={ flightInfo }
+                      names={ names }
+                      key={ id }
+                    />
+                  };
+                } else {
+                  if ((isDirectSelected && flightInfo.outboundFilteredIdLegs.Stops.length === 0) ||
+                  (isOneStopSelected && (flightInfo.outboundFilteredIdLegs.Stops.length === 1 || flightInfo.outboundFilteredIdLegs.Stops.length <= 1)) ||
+                  (isMultipleStopSelected && flightInfo.outboundFilteredIdLegs.Stops.length > 1)) {
+                    return <ResultItemCard
+                      itinerary={ itinerary }
+                      flightInfo={ flightInfo }
+                      names={ names }
+                      key={ id }
+                    />
+                  };
+                }
+                return(<div key={ id }></div>);
               })
             }
           </StyledList>

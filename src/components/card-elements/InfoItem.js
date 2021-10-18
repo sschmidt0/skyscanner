@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
 import { getPlaceName, getStopsNames } from '../../assets/getNames';
-import { StyledInfoItemDiv } from './InfoItem.styles';
+import { DivContainer, UpperDivContainer, StyledInfoItemDiv } from './InfoItem.styles';
 
 export const InfoItem = ({ flightData, names }) => {
-  const isDirect = flightData.Stops.length === 0;
+  const isDirect = flightData.Stops !== undefined && flightData.Stops.length === 0;
   const [departureTime, setDepartureTime] = useState('');
   const [arrivalTime, setArrivalTime] = useState('');
   const [duration, setDuration] = useState('');
@@ -25,7 +26,7 @@ export const InfoItem = ({ flightData, names }) => {
   }, []);
 
   useEffect(() => {
-    if (names !== undefined) {
+    if (names !== undefined && flightData.OriginStation !== undefined) {
       setOrigenPlace(getPlaceName(flightData.OriginStation, names)[0].Code);
       setDestinationPlace(getPlaceName(flightData.DestinationStation, names)[0].Code);
       flightData.Stops.length >= 1 && setStopPlace(getStopsNames(flightData.Stops, names));
@@ -34,28 +35,37 @@ export const InfoItem = ({ flightData, names }) => {
   }, [names]);
 
   return (
-    <StyledInfoItemDiv>
-      <div className="time-place-info">
-        <span>{ departureTime }</span>
-        <span>{ origenPlace }</span>
-      </div>
-      <div className="connection-info">
-        <span>{ duration }</span>
-        <div>
-          {
-            !isDirect && <>
-              <span className="span-red-text">{ stopsNumber }</span>
-              <span></span>
-              <span>{ stopPlace }</span>
-            </>
-          }
-          { isDirect && <span className="span-green-text">Direct</span> }
-        </div>
-      </div>
-      <div className="time-place-info">
-        <span>{ arrivalTime }</span>
-        <span>{ destinationPlace }</span>
-      </div>
-    </StyledInfoItemDiv>
+    <DivContainer>
+      <UpperDivContainer>
+        <StyledInfoItemDiv>
+          <div className="time-place-info">
+            <span>{ departureTime }</span>
+            <span>{ origenPlace }</span>
+          </div>
+          <div className="connection-info">
+            <span>{ duration }</span>
+            <div>
+              {
+                !isDirect && <>
+                  <span className="span-red-text">{ stopsNumber }</span>
+                  <span></span>
+                  <span>{ stopPlace }</span>
+                </>
+              }
+              { isDirect && <span className="span-green-text">Direct</span> }
+            </div>
+          </div>
+          <div className="time-place-info">
+            <span>{ arrivalTime }</span>
+            <span>{ destinationPlace }</span>
+          </div>
+        </StyledInfoItemDiv>
+      </UpperDivContainer>
+    </DivContainer>
   );
+};
+
+InfoItem.propTypes = {
+  flightData: PropTypes.object,
+  names: PropTypes.array,
 };

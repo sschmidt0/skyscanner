@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 export const StyledDurationBox = styled.div`
   position: relative;
-  width: 70px;
+  width: 90px;
   height: 39px;
   margin: 5px 40px 5px 0;
   border-right: 1px solid silver;

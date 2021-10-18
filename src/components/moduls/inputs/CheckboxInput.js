@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import { StyledCheckboxDiv } from './CheckboxInput.styles';
 
 export const CheckboxInput = ({ label, price, name, changeValue, onChangeMethod }) => (
@@ -14,3 +15,11 @@ export const CheckboxInput = ({ label, price, name, changeValue, onChangeMethod 
     </div>
   </StyledCheckboxDiv>
 );
+
+CheckboxInput.propTypes = {
+  label: PropTypes.string,
+  price: PropTypes.string,
+  name: PropTypes.string,
+  changeValue: PropTypes.bool,
+  onChangeMethod: PropTypes.func
+};

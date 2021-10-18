@@ -1,5 +1,16 @@
 import styled from 'styled-components';
 
+export const DivContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+`;
+
+export const UpperDivContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
 export const StyledInfoItemDiv = styled.div`
   display: flex;
   margin: 0 35px;

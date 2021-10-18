@@ -1,12 +1,13 @@
 import { useContext } from 'react';
-import { ResultContext } from '../ResultContext';
+import PropTypes from 'prop-types';
+import { SearchContext } from '../SearchContext';
 import { useHistory } from 'react-router-dom';
 import { Button } from '../moduls/Button';
 import { StyledPriceBox } from "./PriceBox.styles";
 
-export const PriceBox = ({ price, deals, itemData }) => {
+export const PriceBox = ({ price, deals, flightData }) => {
   const history = useHistory();
-  //const [itemDetails, setItemDetails] = useContext(ResultContext);
+  const { setItemData } = useContext(SearchContext);
   const regex = /,\d+/;
   const strPrice = price.toString();
   const replacePrice = strPrice.replace('.', ',');
@@ -14,12 +15,8 @@ export const PriceBox = ({ price, deals, itemData }) => {
     ? replacePrice
     : `${replacePrice}0`;
 
-  console.log('from PriceBox itemData', itemData);
-  //console.log('from PriceBox itemDetails', itemDetails);
-
   const handleSearch = () => {
-    console.log('selected');
-    //setItemDetails(itemData);
+    setItemData(flightData);
     history.push('/result/item');
   };
 
@@ -34,4 +31,10 @@ export const PriceBox = ({ price, deals, itemData }) => {
       />
     </StyledPriceBox>
   );
+};
+
+PriceBox.propTypes = {
+  price: PropTypes.number,
+  deals: PropTypes.string,
+  flightData: PropTypes.object
 };
